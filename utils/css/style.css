@@ -1,0 +1,13 @@
+
+#equipe:hover > .equipe{
+   opacity: 0.5;
+}
+
+#equipe:hover > .equipe:hover{
+     opacity: 1;
+  }
+  
+  .equipe{
+     box-shadow: 5px 3px red;
+     border-radius: 10%;
+  }
