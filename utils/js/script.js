@@ -1,6 +1,9 @@
-let btn_ajout = document.getElementById("btn_ajouter");
+let btn_ajout = document.getElementsByClassName("btn_ajouter");
 let ajout = document.getElementById("ajouter");
 
-btn_ajout.addEventListener('click', () => {
-     ajout.classList.toggle('d-none');
-});
+for(let i=0; i<btn_ajout.length; i++) {
+     
+     btn_ajout[i].addEventListener('click', () => {
+          ajout.classList.toggle('d-none');
+     });
+};

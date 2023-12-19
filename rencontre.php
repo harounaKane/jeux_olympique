@@ -1,94 +1,45 @@
 <?php
+include "_inc.php";
 
-$rencontres = [
-     [
-          "id_rencontre" => 7,
-          "lieu" => "Paris",
-          "type" => "Foot",
-          "nom_equipe_a" => "Congo",
-          "nom_equipe_b" => "Comores",
-          "date_rencontre" => "15/12/2023",
-          "score_e_a" => 2,
-          "score_e_b" => 1
-     ],
-     [
-          "id_rencontre" => 8,
-          "lieu" => "Rabat",
-          "type" => "Foot",
-          "nom_equipe_a" => "Maroc",
-          "nom_equipe_b" => "Mali",
-          "date_rencontre" => "25/12/2023",
-          "score_e_a" => null,
-          "score_e_b" => null
-     ],
-     [
-          "id_rencontre" => 9,
-          "lieu" => "Dakar",
-          "type" => "Foot",
-          "nom_equipe_a" => "Sénégal",
-          "nom_equipe_b" => "Brésil",
-          "date_rencontre" => "30/12/2023",
-          "score_e_a" => null,
-          "score_e_b" => null
-     ],
-     [
-          "id_rencontre" => 10,
-          "lieu" => "Berlin",
-          "type" => "Foot",
-          "nom_equipe_a" => "Allemagne",
-          "nom_equipe_b" => "Brésil",
-          "date_rencontre" => "10/12/2023",
-          "score_e_a" => 1,
-          "score_e_b" => 0
-     ]
-];
+if( !empty($_POST['equipe_a']) ){
+     extract($_POST);
 
-$equipes = [
-     [
-          "id_equipe" => 1,
-          "nom_equipe"   => "Allemagne"
-     ], 
-     [
-          "id_equipe" => 5,
-          "nom_equipe"   => "Caméroun"
-     ], 
-     [
-          "id_equipe" => 10,
-          "nom_equipe"   => "France"
-     ], 
-     [
-          "id_equipe" => 15,
-          "nom_equipe"   => "Chine"
-     ], 
-     [
-          "id_equipe" => 25,
-          "nom_equipe"   => "Benin"
-     ], 
-     [
-          "id_equipe" => 3,
-          "nom_equipe"   => "Mexique"
-     ], 
-     [
-          "id_equipe" => 4,
-          "nom_equipe"   => "Togo"
-     ]
-];
+     $query = "INSERT INTO rencontre VALUES(NULL, :lieu, :type, :ea, :eb, :dt)";
+     $res = execReq($query, [
+          "lieu"   => $lieu,
+          "type"    => $type,
+          "ea"      => $equipe_a,
+          "eb"      => $equipe_b,
+          "dt"      => $date_rencontre
+     ]);
 
-$types = [
-     [
-          "type" => "Football"
-     ],
-     [
-          "type" => "Rugby"
-     ],
-     [
-          "type" => "Basketball"
-     ],
-];
+     if( $res->rowCount() != 0 ){
+          $_SESSION['success'] = "Rencontre programmée ok";
 
-var_dump($equipes);
+          header("location: rencontre.php");
+          exit;
+     }else{
+          $_SESSION['warning'] = "rencontre impossible";
+     }
+}
 
-include ("views/_header.phtml");
+
+$query = "SELECT rencontre.*, ea.nom_equipe AS equipe_a, eb.nom_equipe AS equipe_b
+          FROM rencontre
+          INNER JOIN equipe ea
+          ON ea.id_equipe = id_equipe_a
+          INNER JOIN equipe eb
+          ON eb.id_equipe = id_equipe_b";
+
+$rencontres = execReq($query)->fetchAll();
+
+$equipes = getEquipes();
+
+$types = getDisciplines();
+
+//var_dump($equipes);
+
+include ("views/_header.php");
 
 include "views/vueRencontre.php";
 

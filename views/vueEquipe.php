@@ -2,7 +2,7 @@
 
      <h2 class="text-center">Liste des équipes</h2>
 
-     <a href="#ajouter" id="btn_ajouter" class="btn btn-outline-success">Ajouter</a>
+     <a href="#ajouter" class="btn_ajouter btn btn-outline-success">Ajouter</a>
 
      <div id="equipe" class="row justify-content-around mt-2">
           <?php foreach($equipes as $equipe): ?>
@@ -22,14 +22,16 @@
           <?php endforeach; ?>
      </div>
      
+     <a href="#ajouter" class="btn_ajouter btn btn-outline-success">Ajouter</a>
+
      <div class="d-none" id="ajouter">
           <h3 class="text-center">Ajouter une équipe</h3>
 
-          <form action="" method="pots" class="row align-items-center">
-               <input type="hidden" name="id_equipe" value="">
+          <form action="" method="post" class="row align-items-center">
+               <input type="hidden" value="<?= $equipeToUp['id_equipe'] ?? '' ?>" name="id_equipe" value="">
                <div class="form-group col-4">
                     <label for="">Equipe</label>
-                    <input type="text" name="nom_equipe" value="" class="form-control">
+                    <input type="text" name="nom_equipe" value="<?= $equipeToUp['nom_equipe'] ?? '' ?>" class="form-control">
                </div>
                <div class="col-3 mt-4">
                     <input type="submit">

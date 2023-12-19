@@ -1,5 +1,6 @@
 <?php
 
+include "_inc.php";
 
 $rencontres = [
      [
@@ -41,7 +42,7 @@ $rencontres = [
 ];
 
 
-include ("views/_header.phtml");
+include ("views/_header.php");
 
 include "views/accueil.php";
 

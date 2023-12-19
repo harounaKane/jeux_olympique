@@ -2,17 +2,17 @@
 <h2 class="text-center">Ajouter une rencontre équipe A vs équipe B</h2>
 
 
-<a href="#ajouter" id="btn_ajouter" class="btn btn-outline-success">Ajouter</a>
+<a href="#ajouter" class="btn_ajouter btn btn-outline-success">Ajouter</a>
 
 <div id="equipe" class="row justify-content-around mt-2">
           <?php foreach($rencontres as $equipe): ?>
-               <?php if($equipe['date_rencontre'] >= date("d/m/Y")): ?>
+               <?php if($equipe['date_rencontre'] >= date("Y-m-d h:i:s")): ?>
                <div class="equipe card col-xs-12 col-sm-6 col-md-3 mb-4" style="width: 18rem;">
                     <div class="card-img-top"><i class="fa-solid fa-futbol"></i></div>
                     <div class="card-body">
-                         <h5 class="card-title"><?= $equipe['nom_equipe_a'] ?></h5>
+                         <h5 class="card-title"><?= $equipe['equipe_a'] ?></h5>
                          <i> vs </i>
-                         <h5 class="card-title"><?= $equipe['nom_equipe_b'] ?></h5>
+                         <h5 class="card-title"><?= $equipe['equipe_b'] ?></h5>
                          <p class="card-text">
                              à <?= $equipe['lieu'] ?> le  <?= $equipe['date_rencontre'] ?>
                          </p>
@@ -30,9 +30,12 @@
           <?php endforeach; ?>
      </div>
 
+     
+<a href="#ajouter" class="btn_ajouter btn btn-outline-success">Ajouter</a>
 
 <!-- AJOUTER -->
-<div class="" id="ajouter">
+<div class="d-none mt-3" id="ajouter">
+     <h3>Ajouter une rencontre</h3>
      <form action="" method="post">
           <div class="row">
                <div class="col-6">
@@ -47,9 +50,6 @@
                <div class="col-6">
                     <label for="">Equipe B</label>
                     <select id="equipe_b" class="form-select" name="equipe_b">
-                         <?php foreach($equipes as $equipe): ?>
-                              <option value="<?= $equipe['id_equipe'] ?>"><?= $equipe['nom_equipe'] ?></option>
-                         <?php endforeach; ?> 
                     </select>
                </div>
                <div class="col-6">
@@ -60,7 +60,7 @@
                </div>
                <div class="col-6">
                     <label for="">Type discipline</label>
-                    <select class="form-select" name="equipe_b">
+                    <select class="form-select" name="type">
                          <?php foreach($types as $type): ?>
                               <option value="<?= $type['type'] ?>"><?= $type['type'] ?></option>
                          <?php endforeach; ?> 
@@ -84,18 +84,28 @@
      let equipe_a = document.getElementById('equipe_a');
      let equipe_b = document.getElementById('equipe_b');
 
+     
+     console.log(equipe_b)
 
      equipe_a.addEventListener('change', (even) => {
-          let id_ea = equipe_a[equipe_a.selectedIndex].value;
-          for (let i = 0; i < equipe_b.length; i++) {
-               let id_eb = equipe_b[i].value;
+          //value equipe selectionnee
+          let id_equipeChecked = equipe_a[equipe_a.selectedIndex].value;
+
+          //vide le select equipe b
+          equipe_b.innerHTML = "";
+
+          for (let i = 0; i < equipe_a.length; i++) {
+             //value equipe à chaque tour de boucle
+             id_equipeToCopy = equipe_a[i].value;
+
                
-               if( id_ea == id_eb ){
-                    console.log(equipe_b[i]);
-                    equipe_b[i].text = "";
-                    equipe_b.remove(i)
-               }
-               
+                if( id_equipeChecked != id_equipeToCopy ){
+                    let option = document.createElement("option");
+                    option.value = id_equipeToCopy;
+                    option.text = equipe_a[i].text;
+
+                    equipe_b.appendChild(option)
+                }
           }
      });
      
