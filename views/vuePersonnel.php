@@ -26,7 +26,7 @@
 
      <a href="#ajouter" class="btn_ajouter btn btn-outline-success">Ajouter</a>
      
-     <div class="d-none" id="ajouter">
+     <div class="<?= (isset($personnelToUp)) ? '' : 'd-none' ?>" id="ajouter">
           <h3 class="text-center">Ajouter une équipe</h3>
 
           <form action="" method="post" class="row align-items-center">
@@ -45,7 +45,9 @@
                     <select id="equipe" class="form-select" name="id_equipe">
                          <option value=""> -- Equipe --</option>
                          <?php foreach($equipes as $equipe): ?>
-                              <option value="<?= $equipe['id_equipe'] ?>"><?= $equipe['nom_equipe'] ?></option>
+                              <option <?= isset($personnelToUp) && $personnelToUp['id_equipe'] == $equipe['id_equipe'] ? 'selected' : '' ?> value="<?= $equipe['id_equipe'] ?>">
+                                   <?= $equipe['nom_equipe'] ?>
+                              </option>
                          <?php endforeach; ?> 
                     </select>
                </div>
@@ -54,17 +56,19 @@
                     <select class="form-select" name="role">
                          <option value=""> -- Rôle --</option>
                          <?php foreach($roles as $role): ?>
-                              <option value="<?= $role['id'] ?>"><?= $role['role'] ?></option>
+                              <option <?= isset($personnelToUp) && $personnelToUp['role'] == $role['role'] ? 'selected' : '' ?> value="<?= $role['role'] ?>">
+                                   <?= $role['role'] ?>
+                              </option>
                          <?php endforeach; ?> 
                     </select>
                </div>
                <div class="col-6 mt-2">
                     <div class="form-check form-check-inline">
-                         <input type="radio" name="sexe" value="femme" class="form-check-input" id="fm">
+                         <input <?= isset($personnelToUp) && $personnelToUp['sexe'] == 'femme' ? 'checked' : '' ?> type="radio" name="sexe" value="femme" class="form-check-input" id="fm">
                          <label for="fm">Femme</label>
                     </div>
                     <div class="form-check form-check-inline">
-                         <input type="radio" name="sexe" value="homme" class="form-check-input" id="hm">
+                         <input <?= isset($personnelToUp) && $personnelToUp['sexe'] == 'homme' ? 'checked' : '' ?> type="radio" name="sexe" value="homme" class="form-check-input" id="hm">
                          <label for="hm">Homme</label>
                     </div>
                </div>

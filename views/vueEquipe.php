@@ -14,7 +14,7 @@
                          <a href="?action=delete&id=<?= $equipe['id_equipe'] ?>" class="btn btn-primary">
                               <i class="fa-solid fa-trash"></i>
                          </a>
-                         <a href="?action=update&id=<?= $equipe['id_equipe'] ?>" class="btn btn-primary">
+                         <a href="?action=update&id=<?= $equipe['id_equipe'] ?>#ajouter" class="btn btn-primary">
                               <i class="fa-solid fa-pen"></i>
                          </a>
                     </div>
@@ -24,7 +24,7 @@
      
      <a href="#ajouter" class="btn_ajouter btn btn-outline-success">Ajouter</a>
 
-     <div class="d-none" id="ajouter">
+     <div class="<?= (isset($equipeToUp)) ? '' : 'd-none' ?>" id="ajouter">
           <h3 class="text-center">Ajouter une équipe</h3>
 
           <form action="" method="post" class="row align-items-center">

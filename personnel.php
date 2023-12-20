@@ -14,6 +14,12 @@ $roles = [
      ],
      [
           "id" => 4, "role" => "supporter"
+     ],
+     [
+          "id" => 5, "role" => "entraineur"
+     ],
+     [
+          "id" => 6, "role" => "arbitre"
      ]
 ];
 
@@ -54,7 +60,7 @@ if( isset($_GET['action']) && ctype_digit($_GET['id'])){
                $res = execReq($query, [
                     "pr" => $_POST['prenom'],
                     "nom"=> $_POST["nom"],
-                    'id' => $_GET['id']
+                    'id' => $_POST['id_personnel']
                     ]);
 
                if( $res->rowCount() != 0 ){
@@ -71,9 +77,35 @@ if( isset($_GET['action']) && ctype_digit($_GET['id'])){
           $query = "SELECT * FROM personnel WHERE id_personnel = :id";
           $personnelToUp = execReq($query, ['id' => $_GET['id']])->fetch();
      }
+
+}else if(!empty($_POST['prenom']) && empty($_POST['id_personnel'])){
+     extract($_POST);
+     
+     if( nameValid($prenom) && nameValid($nom) ){
+
+          $query = "INSERT INTO personnel VALUES(NULL, :pr, :nom, :sexe, :role, :equipe, 20)";
+
+          $res = execReq($query, [
+               "pr"       => $prenom,
+               "nom"      => $nom,
+               "sexe"     => $sexe,
+               "role"     => $role,
+               "equipe"   => $id_equipe,
+          ]);
+
+          if( $res->rowCount() != 0 ){
+               $_SESSION['success'] = "ajout personnel ok";
+         
+               header("location: personnel.php");
+               exit;
+          }else{
+               $_SESSION['warning'] = "ajout personnel impossible";
+          }
+     }else{
+          $personnelToUp = $_POST;
+          $_SESSION['warning'] = "ajout personnel impossible";
+     }
 }
-
-
 
 
 include ("views/_header.php");

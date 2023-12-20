@@ -34,3 +34,55 @@ function equipeExists($nom){
 
      return ($res->rowCount() != 0) ? true : false;
 }
+
+function listeRencontres(){
+     $query = "SELECT r.*, ea.nom_equipe AS equipe_a, 
+               eb.nom_equipe AS equipe_b,
+               score_equipe_a AS score_e_a,
+               score_equipe_b AS score_e_b,
+               rm.id_match
+          FROM rencontre r
+          INNER JOIN equipe ea
+          ON ea.id_equipe = id_equipe_a
+          INNER JOIN equipe eb
+          ON eb.id_equipe = id_equipe_b
+          AND ea.id_equipe != eb.id_equipe
+          LEFT JOIN resultat_match rm
+          ON rm.id_rencontre = r.id_rencontre";
+
+     $rencontres = execReq($query)->fetchAll();
+
+     return $rencontres;
+}
+
+function score(){
+     $query = "SELECT 
+                    r.*,
+                    ea.nom_equipe AS equipe_a,
+                    eb.nom_equipe AS equipe_b
+               FROM rencontre r
+               INNER JOIN equipe AS ea
+                    ON r.id_equipe_a = ea.id_equipe
+               INNER JOIN equipe AS eb
+                    ON r.id_equipe_b = eb.id_equipe
+               WHERE r.date_rencontre <= now()
+               AND r.id_rencontre NOT IN (SELECT id_rencontre FROM resultat_match)
+               ";
+
+     $rencontres = execReq($query)->fetchAll();
+     
+     return $rencontres;
+}
+
+function nameValid($chaine, $taille = 2){
+     $chaine = trim($chaine);
+
+     for ($i=0; $i < strlen($chaine); $i++) { 
+    
+          if( ctype_digit($chaine[$i]) || !ctype_alpha($chaine[$i]) ){
+               return false;
+          }
+     }
+
+     return true;
+}

@@ -20,7 +20,7 @@
                          <a href="?action=delete&id=<?= $equipe['id_rencontre'] ?>" class="btn btn-primary">
                               <i class="fa-solid fa-trash"></i>
                          </a>
-                         <a href="?action=update&id=<?= $equipe['id_rencontre'] ?>" class="btn btn-primary">
+                         <a href="?action=update&id=<?= $equipe['id_rencontre'] ?>#ajouter" class="btn btn-primary">
                               <i class="fa-solid fa-pen"></i>
                          </a>
 
@@ -34,35 +34,43 @@
 <a href="#ajouter" class="btn_ajouter btn btn-outline-success">Ajouter</a>
 
 <!-- AJOUTER -->
-<div class="d-none mt-3" id="ajouter">
+<div class="<?= (isset($rencontreToUp)) ? '' : 'd-none' ?> mt-3" id="ajouter">
      <h3>Ajouter une rencontre</h3>
      <form action="" method="post">
+          <input value="<?= $rencontreToUp['id_rencontre'] ?? '' ?>" type="hidden" name="id_rencontre" value="">
           <div class="row">
                <div class="col-6">
                     <label for="">Equipe A</label>
                     <select id="equipe_a" class="form-select" name="equipe_a">
                          <option value=""> -- Equipe --</option>
                          <?php foreach($equipes as $equipe): ?>
-                              <option value="<?= $equipe['id_equipe'] ?>"><?= $equipe['nom_equipe'] ?></option>
+                              <option <?= isset($rencontreToUp) && $rencontreToUp['id_equipe_a'] == $equipe['id_equipe'] ? 'selected' : '' ?> value="<?= $equipe['id_equipe'] ?>">
+                                   <?= $equipe['nom_equipe'] ?>
+                              </option>
                          <?php endforeach; ?> 
                     </select>
                </div>
                <div class="col-6">
                     <label for="">Equipe B</label>
                     <select id="equipe_b" class="form-select" name="equipe_b">
+                         <option <?php if(isset($rencontreToUp)): ?>  value="<?= $rencontreToUp['id_equipe_b'] ?>" <?php endif; ?> >
+                                   <?= isset($rencontreToUp)  ? $rencontreToUp["equipe_b"] : '' ?>
+                              </option>
                     </select>
                </div>
                <div class="col-6">
                     <div class="form-group">
                          <label for="">Leiu</label>
-                         <input type="text" name="lieu" class="form-control">
+                         <input value="<?= $rencontreToUp['lieu'] ?? '' ?>" type="text" name="lieu" class="form-control">
                     </div>
                </div>
                <div class="col-6">
                     <label for="">Type discipline</label>
                     <select class="form-select" name="type">
                          <?php foreach($types as $type): ?>
-                              <option value="<?= $type['type'] ?>"><?= $type['type'] ?></option>
+                              <option <?= isset($rencontreToUp) && $rencontreToUp['type'] == $type['type'] ? 'selected' : '' ?> value="<?= $type['type'] ?>">
+                                   <?= $type['type'] ?>
+                              </option>
                          <?php endforeach; ?> 
                     </select>
                </div>
@@ -70,7 +78,7 @@
                <div class="col-6 mb-3">
                     <div class="form-group">
                          <label for="">Date rencontre</label>
-                         <input type="date" name="date_rencontre" class="form-control">
+                         <input value="<?= $rencontreToUp['date_rencontre'] ?? '' ?>" type="datetime" name="date_rencontre" class="form-control">
                     </div>
                </div>
                <div>

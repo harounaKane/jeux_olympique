@@ -11,13 +11,13 @@
                     <th>Equipe B</th>
                </tr>
                <?php foreach($rencontres as $ren): ?>
-                    <?php if($ren['date_rencontre'] >= date("d/m/Y")): ?>
+                    <?php if($ren['date_rencontre'] >= date("Y-m-d H:i:s")): ?>
                          <tr>
                               <td> <?= $ren['type'] ?> </td>
                               <td> <?= $ren['date_rencontre'] ?> </td>
                               <td> <?= $ren['lieu'] ?> </td>
-                              <td> <?= $ren['nom_equipe_a'] ?> </td>
-                              <td> <?= $ren['nom_equipe_b'] ?> </td>
+                              <td> <?= $ren['equipe_a'] ?> </td>
+                              <td> <?= $ren['equipe_b'] ?> </td>
                          </tr>
                     <?php endif; ?>
                <?php endforeach; ?>
@@ -37,18 +37,18 @@
                     <th>Equipe B</th>
                </tr>
                <?php foreach($rencontres as $ren): ?>
-                    <?php if($ren['date_rencontre'] < date("d/m/Y")): ?>
+                    <?php if($ren['date_rencontre'] < date("Y-m-d H:i:s")): ?>
                          <tr>
                               <td> <?= $ren['type'] ?> </td>
                               <td> <?= $ren['date_rencontre'] ?> </td>
                               <td> <?= $ren['lieu'] ?> </td>
-                              <td> <?= $ren['nom_equipe_a'] ?> </td>
+                              <td> <?= $ren['equipe_a'] ?> </td>
                               <td>
                                    <?= $ren['score_e_a'] ?>
                                     - 
                                    <?= $ren['score_e_b'] ?>
                               </td>
-                              <td> <?= $ren['nom_equipe_b'] ?> </td>
+                              <td> <?= $ren['equipe_b'] ?> </td>
                          </tr>
                     <?php endif; ?>
                <?php endforeach; ?>

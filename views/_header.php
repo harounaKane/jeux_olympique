@@ -18,6 +18,7 @@
                     <a href="personnel.php" class="btn">Personnel</a>               
                     <a href="equipe.php" class="btn">Equipe</a>               
                     <a href="rencontre.php" class="btn">Matchs</a>  
+                    <a href="resultat.php" class="btn">résultat</a>  
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
                          <ul class="navbar-nav">
                               <li class="nav-item dropdown">
