@@ -2,7 +2,20 @@
 
      <h2 class="text-center">Liste des équipes</h2>
 
-     <a href="#ajouter" class="btn_ajouter btn btn-outline-success">Ajouter</a>
+     <div class="container row text-center my-3">
+
+          <a href="#ajouter" class="btn_ajouter btn btn-outline-success col-1">Ajouter</a>
+
+          <form action="equipe.php" method="post" class="col-3 offset-4">
+               <select name="filtre" id="" class="p-2">
+                    <option value="all">Toutes les équipes</option>
+                    <option value="withMatch">Equipes avec match</option>
+                    <option value="withOutMatch">Equipes sans match</option>
+               </select>
+               <input type="submit" value="OK" class="btn btn-success">
+          </form>
+
+     </div>
 
      <div id="equipe" class="row justify-content-around mt-2">
           <?php foreach($equipes as $equipe): ?>
@@ -11,7 +24,7 @@
                     <div class="card-body">
                          <h5 class="card-title"><?= $equipe['nom_equipe'] ?></h5>
                          <p class="card-text"></p>
-                         <a href="?action=delete&id=<?= $equipe['id_equipe'] ?>" class="btn btn-primary">
+                         <a href="?action=delete&id=<?= $equipe['id_equipe'] ?>&nom_equipe=<?= $equipe['nom_equipe'] ?>" class="btn btn-primary">
                               <i class="fa-solid fa-trash"></i>
                          </a>
                          <a href="?action=update&id=<?= $equipe['id_equipe'] ?>#ajouter" class="btn btn-primary">

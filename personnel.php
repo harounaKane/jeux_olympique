@@ -105,6 +105,17 @@ if( isset($_GET['action']) && ctype_digit($_GET['id'])){
           $personnelToUp = $_POST;
           $_SESSION['warning'] = "ajout personnel impossible";
      }
+}else if( isset($_POST['filtre']) ){
+     $filter = $_POST['filtre'];
+
+     $query = "SELECT p.*, e.nom_equipe 
+          FROM personnel AS p 
+          INNER JOIN equipe AS e
+          ON e.id_equipe = p.id_equipe
+          WHERE :filtre IN (p.id_personnel, p.nom, p.prenom, p.role, p.sexe, e.nom_equipe)" ;
+
+     $personnels = execReq($query, ["filtre" => $filter])->fetchAll();
+
 }
 
 

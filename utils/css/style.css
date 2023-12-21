@@ -7,7 +7,17 @@
      opacity: 1;
   }
   
-  .equipe{
-     box-shadow: 5px 3px red;
-     border-radius: 10%;
-  }
+.equipe{
+   box-shadow: 5px 3px red;
+   border-radius: 10%;
+}
+
+.typeMsg{
+   position: absolute;
+   top: 77%;
+   z-index: 1;
+   /* left: 0%; */
+   width: 95%;
+   margin: 0 auto;
+   text-align: center;
+}

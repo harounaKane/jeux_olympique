@@ -79,10 +79,37 @@ function nameValid($chaine, $taille = 2){
 
      for ($i=0; $i < strlen($chaine); $i++) { 
     
-          if( ctype_digit($chaine[$i]) || !ctype_alpha($chaine[$i]) ){
+          if( !ctype_alpha($chaine[$i]) ){
                return false;
           }
      }
 
      return true;
+}
+
+
+function hasMatch($id_equipe, $date){
+
+     $query = "SELECT date_rencontre 
+               FROM rencontre 
+               WHERE :id_equipe 
+               IN (id_equipe_a, id_equipe_b)
+               ORDER BY date_rencontre DESC";
+     
+     $dateBd = execReq($query, ["id_equipe" => $id_equipe])->fetch();
+
+     if( interValJour($date, $dateBd['date_rencontre']) > 2 ){
+          return true;
+     }
+
+     return false;
+}
+
+function interValJour($datePrev, $lastDateOfMatch){
+     $prog = strtotime($datePrev);
+     $last = strtotime($lastDateOfMatch);
+     
+     $j = floor(($last - $prog)/(60*60*24));
+
+     return abs($j);
 }

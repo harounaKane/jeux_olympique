@@ -5,23 +5,26 @@ include "_inc.php";
 if( !empty($_POST['equipe_a']) && empty($_POST['id_rencontre'])){
      extract($_POST);
 
-     $query = "INSERT INTO rencontre VALUES(NULL, :lieu, :type, :ea, :eb, :dt)";
-     $res = execReq($query, [
-          "lieu"   => $lieu,
-          "type"    => $type,
-          "ea"      => $equipe_a,
-          "eb"      => $equipe_b,
-          "dt"      => $date_rencontre
-     ]);
+     if( hasMatch($equipe_a, $date_rencontre) && hasMatch($equipe_b, $date_rencontre) ){
+          $query = "INSERT INTO rencontre VALUES(NULL, :lieu, :type, :ea, :eb, :dt)";
+          $res = execReq($query, [
+               "lieu"   => $lieu,
+               "type"    => $type,
+               "ea"      => $equipe_a,
+               "eb"      => $equipe_b,
+               "dt"      => $date_rencontre
+          ]);
 
-     if( $res->rowCount() != 0 ){
-          $_SESSION['success'] = "Rencontre programmée ok";
-
-          header("location: rencontre.php");
-          exit;
-     }else{
-          $_SESSION['warning'] = "rencontre impossible";
+          if( $res->rowCount() != 0 ){
+               $_SESSION['success'] = "Rencontre programmée ok";
+     
+               header("location: rencontre.php");
+               exit;
+          }
      }
+     
+     $_SESSION['warning'] = "rencontre impossible";
+     
 }else if( isset($_GET['action']) && ctype_digit($_GET['id'])){
      $action = $_GET['action'];
 

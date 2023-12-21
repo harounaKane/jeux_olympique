@@ -2,7 +2,16 @@
 
      <h2 class="text-center">Liste des personnes</h2>
 
-     <a href="#ajouter" class="btn_ajouter btn btn-outline-success">Ajouter</a>
+     <div class="container row text-center my-3">
+
+          <a href="#ajouter" class="btn_ajouter btn btn-outline-success col-1">Ajouter</a>
+
+          <form action="personnel.php" method="post" class="col-6 offset-3">
+               <input type="text" name="filtre" class="p-2" placeholder="prenom, equipe, role">
+               <input type="submit" value="OK" class="btn btn-success">
+          </form>
+
+     </div>
 
      <div id="equipe" class="row justify-content-around mt-2">
           <?php foreach($personnels as $person): ?>
